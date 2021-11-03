@@ -4,15 +4,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.ui.activity.MainActivity">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTotal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/product_preview_cart_height"
+        android:text="@string/product_empty_cart"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/common_padding_default"
+        android:layout_marginEnd="@dimen/common_padding_default"
+        android:layout_marginBottom="@dimen/common_padding_min"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/materialButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/product_view_cart"
+        android:layout_marginEnd="@dimen/common_padding_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTotal"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvProducts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvTotal"
+        tools:visibility="visible">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_product"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/lyProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

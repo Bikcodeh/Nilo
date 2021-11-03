@@ -1,7 +1,8 @@
-package com.bikcode.nilo
+package com.bikcode.nilo.presentation.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bikcode.nilo.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
