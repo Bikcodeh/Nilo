@@ -13,6 +13,7 @@ import com.bikcode.nilo.data.model.ProductDTO
 import com.bikcode.nilo.databinding.ActivityMainBinding
 import com.bikcode.nilo.presentation.adapter.ProductAdapter
 import com.bikcode.nilo.presentation.listener.OnProductListener
+import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.firebase.ui.auth.AuthUI
@@ -66,6 +67,14 @@ class MainActivity : AppCompatActivity(), OnProductListener {
         setContentView(binding.root)
         configAuth()
         setupRecycler()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.btnShoppingCart.setOnClickListener {
+            val fragment = CartFragment()
+            fragment.show(supportFragmentManager.beginTransaction(), CartFragment::class.java.simpleName)
+        }
     }
 
     private fun setupRecycler() {
@@ -169,10 +178,6 @@ class MainActivity : AppCompatActivity(), OnProductListener {
     }
 
     override fun onClick(product: ProductDTO) {
-        TODO("Not yet implemented")
-    }
 
-    override fun onLongClick(product: ProductDTO) {
-        TODO("Not yet implemented")
     }
 }

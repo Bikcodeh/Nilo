@@ -5,4 +5,5 @@
     <dimen name="product_img_height">8dp</dimen>
     <dimen name="common_padding_min">8dp</dimen>
     <dimen name="product_preview_cart_height">80dp</dimen>
+    <dimen name="product_cart_img_size">48dp</dimen>
 </resources>

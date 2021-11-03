@@ -18,10 +18,10 @@
         android:layout_marginBottom="@dimen/common_padding_min"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/materialButton" />
+        app:layout_constraintEnd_toStartOf="@+id/btnShoppingCart" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/btnShoppingCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/product_view_cart"
