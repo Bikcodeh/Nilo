@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
 import com.bikcode.nilo.databinding.FragmentCartBinding
 import com.bikcode.nilo.presentation.adapter.ProductCartAdapter
@@ -21,6 +22,8 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
     private lateinit var productCarAdapter: ProductCartAdapter
+
+    protected var totalPrice = 0.0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentCartBinding.inflate(LayoutInflater.from(activity))
@@ -71,10 +74,13 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
     }
 
     override fun setQuantity(product: ProductDTO) {
-        TODO("Not yet implemented")
+
     }
 
     override fun showTotal(total: Double) {
-        TODO("Not yet implemented")
+        totalPrice = total
+        binding?.let {
+            it.tvTotalCart.text = getString(R.string.cart_full, totalPrice)
+        }
     }
 }

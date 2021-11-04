@@ -26,6 +26,7 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
     override fun onBindViewHolder(holder: ProductCartViewHolder, position: Int) {
         val product = products[position]
         holder.setListeners(product)
+        holder.bind(product)
 
     }
 
@@ -44,6 +45,7 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
         if(products.contains(productDTO).not()) {
             products.add(productDTO)
             notifyItemInserted(products.count() - 1)
+            calculateTotal()
         } else {
             update(productDTO)
         }
@@ -54,6 +56,7 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
             if(it != -1) {
                 products[it] = productDTO
                 notifyItemChanged(it)
+                calculateTotal()
             }
         }
     }
@@ -63,8 +66,17 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
             if(it != -1) {
                 products.removeAt(it)
                 notifyItemRemoved(it)
+                calculateTotal()
             }
         }
+    }
+
+    private fun calculateTotal(){
+        var result = 0.0
+        for(product in products) {
+            result += product.totalPrice()
+        }
+        listener.showTotal(result)
     }
 
     inner class ProductCartViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -74,7 +86,7 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
         fun bind(productDTO: ProductDTO) {
             with(binding) {
                 tvNameCart.text = productDTO.name
-                tvQuantityCart.text = productDTO.quantity.toString()
+                tvQuantityCart.text = productDTO.newQuantity.toString()
 
                 Glide.with(context)
                     .load(productDTO.imgUrl)
