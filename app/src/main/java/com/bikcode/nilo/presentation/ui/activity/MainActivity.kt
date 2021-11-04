@@ -15,6 +15,7 @@ import com.bikcode.nilo.presentation.adapter.ProductAdapter
 import com.bikcode.nilo.presentation.listener.MainAux
 import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
+import com.bikcode.nilo.presentation.ui.fragment.detail.DetailFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.firebase.ui.auth.AuthUI
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var productAdapter: ProductAdapter
     private lateinit var firestoreListener: ListenerRegistration
+    private var productSelected: ProductDTO? = null
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -179,10 +181,23 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
     override fun onClick(product: ProductDTO) {
-
+        productSelected = product
+        val fragment = DetailFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.containerMain, fragment)
+            .addToBackStack(null)
+            .commit()
+        showButton(isVisible = false)
     }
 
     override fun getProductsCart(): MutableList<ProductDTO> {
         return mutableListOf()
+    }
+
+    override fun getProductSelected(): ProductDTO? = productSelected
+
+    override fun showButton(isVisible: Boolean) {
+        val visible = if (isVisible) View.VISIBLE else View.GONE
+        binding.btnShoppingCart.visibility = visible
     }
 }
