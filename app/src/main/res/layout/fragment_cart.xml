@@ -69,6 +69,7 @@
             tools:text="Total: $437.50 USD"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProductsCart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             tools:listitem="@layout/item_product_cart"

@@ -12,6 +12,7 @@ import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
 import com.bikcode.nilo.databinding.ActivityMainBinding
 import com.bikcode.nilo.presentation.adapter.ProductAdapter
+import com.bikcode.nilo.presentation.listener.MainAux
 import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-class MainActivity : AppCompatActivity(), OnProductListener {
+class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -179,5 +180,9 @@ class MainActivity : AppCompatActivity(), OnProductListener {
 
     override fun onClick(product: ProductDTO) {
 
+    }
+
+    override fun getProductsCart(): MutableList<ProductDTO> {
+        return mutableListOf()
     }
 }
