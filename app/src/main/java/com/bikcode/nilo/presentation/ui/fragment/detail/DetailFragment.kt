@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
@@ -92,12 +93,13 @@ class DetailFragment : Fragment() {
     private fun setNewQuantity(product: ProductDTO) {
         with(binding) {
             tieQuantityDetail.setText(product.newQuantity.toString())
-            tvTotalPriceDetail.text = getString(
+            val newQuantityStr = getString(
                 R.string.total_label,
                 product.totalPrice(),
                 product.newQuantity,
                 product.totalPrice()
             )
+            tvTotalPriceDetail.text = HtmlCompat.fromHtml(newQuantityStr, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }
 }

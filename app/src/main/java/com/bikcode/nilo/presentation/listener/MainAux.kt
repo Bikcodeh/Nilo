@@ -8,4 +8,5 @@ interface MainAux {
     fun showButton(isVisible: Boolean)
     fun addToCart(productDTO: ProductDTO)
     fun updateTotal()
+    fun clearCart()
 }

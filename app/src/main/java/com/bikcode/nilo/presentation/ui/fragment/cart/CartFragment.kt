@@ -53,7 +53,16 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
             it.ibCancelCart.setOnClickListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
+
+            it.efaPay.setOnClickListener {
+                requestOrder()
+            }
         }
+    }
+
+    private fun requestOrder() {
+        dismiss()
+        (activity as? MainAux)?.clearCart()
     }
 
     private fun setupRecycler() {
