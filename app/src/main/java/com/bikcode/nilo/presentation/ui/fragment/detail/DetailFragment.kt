@@ -44,7 +44,11 @@ class DetailFragment : Fragment() {
             with(binding) {
                 tvProductNameDetail.text = it.name
                 tvDescriptionDetail.text = it.description
-                tvAvailable.text = it.quantity.toString()
+                tvAvailable.text = getString(R.string.available_label, it.quantity)
+                tvTotalPriceDetail.text = getString(R.string.total_label,
+                    it.totalPrice(),
+                    it.newQuantity,
+                    it.totalPrice())
 
                 Glide.with(this@DetailFragment)
                     .load(it.imgUrl)

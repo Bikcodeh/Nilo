@@ -20,7 +20,7 @@
     <string name="product_view_cart">Shopping cart</string>
     <string name="shopping_cart_title">Shopping cart</string>
     <string name="pay">Pay</string>
-    <string name="available_label">Available</string>
-    <string name="total_label">Total</string>
+    <string name="available_label">Available: %1$d</string>
+    <string name="total_label">Total: $%1$.2f USD(%2$d * $%3$.2f)</string>
     <string name="add_to_cart">Add to cart</string>
 </resources>

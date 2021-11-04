@@ -9,8 +9,11 @@ data class ProductDTO(
     var description: String? = null,
     var imgUrl: String? = null,
     var quantity: Int = 0,
-    var price: Double = 0.0
+    var price: Double = 0.0,
+    @get:Exclude var newQuantity: Int = 1
 ) {
+    fun totalPrice(): Double = newQuantity * price
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
