@@ -99,10 +99,12 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
 
         fun setListeners(product: ProductDTO) {
             binding.ibSum.setOnClickListener {
+                product.newQuantity += 1
                 listener.setQuantity(product)
             }
 
             binding.ibSub.setOnClickListener {
+                product.newQuantity -= 1
                 listener.setQuantity(product)
             }
         }
