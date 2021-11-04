@@ -28,8 +28,34 @@ class DetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        getProduct()
         super.onViewCreated(view, savedInstanceState)
+        getProduct()
+        setupButtons()
+    }
+
+    private fun setupButtons() {
+        product?.let { productDTO ->
+            with(binding) {
+                ibSubDetail.setOnClickListener {
+                    if(productDTO.newQuantity > 1) {
+                        productDTO.newQuantity -= 1
+                        setNewQuantity(productDTO)
+                    }
+                }
+
+                ibSumDetail.setOnClickListener {
+                    if(productDTO.newQuantity < productDTO.quantity) {
+                        productDTO.newQuantity += 1
+                        setNewQuantity(productDTO)
+                    }
+                }
+
+                efabAddToCart.setOnClickListener {
+                    productDTO.newQuantity = tieQuantityDetail.text.toString().toInt()
+                    addToCart(productDTO)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -45,10 +71,7 @@ class DetailFragment : Fragment() {
                 tvProductNameDetail.text = it.name
                 tvDescriptionDetail.text = it.description
                 tvAvailable.text = getString(R.string.available_label, it.quantity)
-                tvTotalPriceDetail.text = getString(R.string.total_label,
-                    it.totalPrice(),
-                    it.newQuantity,
-                    it.totalPrice())
+                setNewQuantity(it)
 
                 Glide.with(this@DetailFragment)
                     .load(it.imgUrl)
@@ -58,6 +81,22 @@ class DetailFragment : Fragment() {
                     .error(R.drawable.ic_broken_image)
                     .into(imgProductDetail)
             }
+        }
+    }
+
+    private fun addToCart(product: ProductDTO) {
+        (activity as? MainAux)?.addToCart(product)
+    }
+
+    private fun setNewQuantity(product: ProductDTO) {
+        with(binding) {
+            tieQuantityDetail.setText(product.newQuantity.toString())
+            tvTotalPriceDetail.text = getString(
+                R.string.total_label,
+                product.totalPrice(),
+                product.newQuantity,
+                product.totalPrice()
+            )
         }
     }
 }

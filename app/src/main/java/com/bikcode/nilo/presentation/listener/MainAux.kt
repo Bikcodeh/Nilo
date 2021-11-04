@@ -6,4 +6,5 @@ interface MainAux {
     fun getProductsCart(): MutableList<ProductDTO>
     fun getProductSelected(): ProductDTO?
     fun showButton(isVisible: Boolean)
+    fun addToCart(productDTO: ProductDTO)
 }

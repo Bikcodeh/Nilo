@@ -85,6 +85,7 @@
             android:textAlignment="center"
             android:inputType="number"
             android:imeOptions="actionDone"
+            android:focusable="false"
             tools:text="5"/>
 
     </com.google.android.material.textfield.TextInputLayout>

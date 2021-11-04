@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var firestoreListener: ListenerRegistration
     private var productSelected: ProductDTO? = null
+    private val products = mutableListOf<ProductDTO>()
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -181,7 +182,12 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
     override fun onClick(product: ProductDTO) {
-        productSelected = product
+        val index = products.indexOf(product)
+        productSelected = if(index != -1) {
+            products[index]
+        } else {
+            product
+        }
         val fragment = DetailFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.containerMain, fragment)
@@ -190,14 +196,21 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
         showButton(isVisible = false)
     }
 
-    override fun getProductsCart(): MutableList<ProductDTO> {
-        return mutableListOf()
-    }
+    override fun getProductsCart(): MutableList<ProductDTO> = products
 
     override fun getProductSelected(): ProductDTO? = productSelected
 
     override fun showButton(isVisible: Boolean) {
         val visible = if (isVisible) View.VISIBLE else View.GONE
         binding.btnShoppingCart.visibility = visible
+    }
+
+    override fun addToCart(productDTO: ProductDTO) {
+        val index = products.indexOf(productDTO)
+        if(index != -1) {
+            products[index] = productDTO
+        } else {
+            products.add(productDTO)
+        }
     }
 }
