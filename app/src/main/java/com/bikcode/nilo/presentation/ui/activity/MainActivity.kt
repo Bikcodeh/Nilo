@@ -212,5 +212,20 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
         } else {
             products.add(productDTO)
         }
+
+        updateTotal()
+    }
+
+    override fun updateTotal() {
+        var total = 0.0
+        products.forEach { productDTO ->
+            total += productDTO.totalPrice()
+        }
+
+        if(total == 0.0) {
+            binding.tvTotal.text = getString(R.string.product_empty_cart)
+        } else {
+            binding.tvTotal.text = getString(R.string.cart_full, total)
+        }
     }
 }

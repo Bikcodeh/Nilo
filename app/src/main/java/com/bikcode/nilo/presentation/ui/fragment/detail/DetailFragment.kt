@@ -53,6 +53,7 @@ class DetailFragment : Fragment() {
                 efabAddToCart.setOnClickListener {
                     productDTO.newQuantity = tieQuantityDetail.text.toString().toInt()
                     addToCart(productDTO)
+                    activity?.onBackPressed()
                 }
             }
         }

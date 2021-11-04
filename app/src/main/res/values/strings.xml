@@ -17,6 +17,7 @@
     <string name="product_updated">Product updated!</string>
     <string name="error_sending_image">An error has occurred uploading the image</string>
     <string name="product_empty_cart">Empty cart</string>
+    <string name="cart_full">Total: $%1$.2f</string>
     <string name="product_view_cart">Shopping cart</string>
     <string name="shopping_cart_title">Shopping cart</string>
     <string name="pay">Pay</string>
