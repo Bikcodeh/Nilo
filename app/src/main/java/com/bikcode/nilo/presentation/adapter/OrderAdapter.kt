@@ -10,12 +10,20 @@ import com.bikcode.nilo.data.model.OrderDTO
 import com.bikcode.nilo.databinding.ItemOrderBinding
 import com.bikcode.nilo.presentation.listener.OnOrderListener
 
-class OrderAdapter(private val listener: OnOrderListener): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+class OrderAdapter(private val listener: OnOrderListener) :
+    RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     private val orders = mutableListOf<OrderDTO>()
     private lateinit var context: Context
 
-    inner class OrderViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    private val statusKeys: Array<Int> by lazy {
+        context.resources.getIntArray(R.array.status_key).toTypedArray()
+    }
+    private val statusValues: Array<String> by lazy {
+        context.resources.getStringArray(R.array.status_value)
+    }
+
+    inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemOrderBinding.bind(view)
 
         fun bind(orderDTO: OrderDTO) {
@@ -25,9 +33,16 @@ class OrderAdapter(private val listener: OnOrderListener): RecyclerView.Adapter<
                     names += "${order.value.name}, "
                 }
                 tvProductNames.text = names.dropLast(2)
-                tvTotalPrice.text = orderDTO.totalPrice.toString()
-                tvId.text = orderDTO.id
-                tvStatus.text = orderDTO.status.toString()
+                tvTotalPrice.text = context.getString(R.string.cart_full, orderDTO.totalPrice)
+                tvId.text = context.getString(R.string.order_id, orderDTO.id)
+
+                val index = statusKeys.indexOf(orderDTO.status)
+                val status = if (index != -1) {
+                    statusValues[index]
+                } else {
+                    context.getString(R.string.order_status_unknown)
+                }
+                tvStatus.text = context.getString(R.string.status, status)
             }
         }
 
@@ -42,12 +57,11 @@ class OrderAdapter(private val listener: OnOrderListener): RecyclerView.Adapter<
                 }
             }
         }
-
     }
 
     fun add(orderDTO: OrderDTO) {
         orders.add(orderDTO)
-        notifyItemInserted(orders.count()  -1)
+        notifyItemInserted(orders.count() - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
