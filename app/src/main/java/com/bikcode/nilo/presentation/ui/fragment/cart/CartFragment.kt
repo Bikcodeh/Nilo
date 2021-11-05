@@ -1,19 +1,27 @@
 package com.bikcode.nilo.presentation.ui.fragment.cart
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bikcode.nilo.R
+import com.bikcode.nilo.data.model.OrderDTO
 import com.bikcode.nilo.data.model.ProductDTO
+import com.bikcode.nilo.data.model.ProductOrder
 import com.bikcode.nilo.databinding.FragmentCartBinding
 import com.bikcode.nilo.presentation.adapter.ProductCartAdapter
 import com.bikcode.nilo.presentation.listener.MainAux
 import com.bikcode.nilo.presentation.listener.OnCartListener
+import com.bikcode.nilo.presentation.ui.activity.OrderActivity
+import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
+import com.bikcode.nilo.presentation.util.showToast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CartFragment : BottomSheetDialogFragment(), OnCartListener {
 
@@ -61,8 +69,35 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
     }
 
     private fun requestOrder() {
-        dismiss()
-        (activity as? MainAux)?.clearCart()
+
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let { currentUser ->
+            val products = hashMapOf<String, ProductOrder>()
+            productCarAdapter.getProducts().forEach { product ->
+                products.put(
+                    product.id!!,
+                    ProductOrder(
+                        id = product.id!!,
+                        name = product.name!!,
+                        quantity = product.newQuantity
+                    )
+                )
+            }
+            val order = OrderDTO(clientId = currentUser.uid, products = products, totalPrice = totalPrice, status = 1)
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(REQUESTS_COLLECTION)
+                .add(order)
+                .addOnSuccessListener {
+                    dismiss()
+                    (activity as? MainAux)?.clearCart()
+                    context?.showToast(R.string.buy_done)
+                    startActivity(Intent(context, OrderActivity::class.java))
+
+                }.addOnFailureListener {
+                    context?.showToast(R.string.insert_error)
+                }
+        }
     }
 
     private fun setupRecycler() {

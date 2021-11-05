@@ -79,6 +79,8 @@ class ProductCartAdapter: RecyclerView.Adapter<ProductCartAdapter.ProductCartVie
         listener.showTotal(result)
     }
 
+    fun getProducts(): List<ProductDTO> = products
+
     inner class ProductCartViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
         private val binding = ItemProductCartBinding.bind(view)
