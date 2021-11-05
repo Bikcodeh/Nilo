@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Nilo">
         <activity
             android:name=".presentation.ui.activity.OrderActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/order_history"/>
         <activity
             android:name=".presentation.ui.activity.MainActivity"
             android:exported="true">

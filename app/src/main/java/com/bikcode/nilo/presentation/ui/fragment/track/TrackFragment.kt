@@ -2,8 +2,10 @@ package com.bikcode.nilo.presentation.ui.fragment.track
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.OrderDTO
@@ -40,12 +42,37 @@ class TrackFragment: Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as? AppCompatActivity)?.let {
+            it.supportActionBar?.setDisplayShowHomeEnabled(false)
+            it.supportActionBar?.title = getString(R.string.order_history)
+            setHasOptionsMenu(false)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) {
+            activity?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun getOrder() {
         order = (activity as? OrderAux)?.getOrderSelected()
 
         order?.let {
             updateUI(it)
             getOrderRealtime(it.id)
+            setupActionBar()
+        }
+    }
+
+    private fun setupActionBar() {
+        (activity as? AppCompatActivity)?.let {
+            it.supportActionBar?.setDisplayShowHomeEnabled(true)
+            it.supportActionBar?.title = getString(R.string.track_title)
+            setHasOptionsMenu(true)
         }
     }
 

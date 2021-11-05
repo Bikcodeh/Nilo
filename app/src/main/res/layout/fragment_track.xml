@@ -26,6 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="@dimen/track_margin_bottom_progress"
             android:layout_marginHorizontal="@dimen/common_padding_min"
+            app:indicatorColor="?colorSecondaryVariant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:progress="24"/>
@@ -39,6 +40,7 @@
         android:text="@string/order_status_ordered"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:background="@drawable/background_check_box"
+        android:buttonTint="?colorSecondaryVariant"
         app:layout_constraintStart_toStartOf="@+id/cnlProgress"
         app:layout_constraintTop_toTopOf="@+id/cnlProgress" />
 
@@ -49,6 +51,7 @@
         android:text="@string/order_status_preparing"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:background="@drawable/background_check_box"
+        android:buttonTint="?colorSecondaryVariant"
         app:layout_constraintStart_toStartOf="@+id/cnlProgress"
         app:layout_constraintTop_toBottomOf="@+id/cbOrdered"
         app:layout_constraintBottom_toTopOf="@+id/cbSent"/>
@@ -60,6 +63,7 @@
         android:text="@string/order_status_sent"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:background="@drawable/background_check_box"
+        android:buttonTint="?colorSecondaryVariant"
         app:layout_constraintStart_toStartOf="@+id/cnlProgress"
         app:layout_constraintTop_toBottomOf="@+id/cbPreparing"
         app:layout_constraintBottom_toTopOf="@+id/cbDelivered"/>
@@ -71,6 +75,7 @@
         android:text="@string/order_status_delivered"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:background="@drawable/background_check_box"
+        android:buttonTint="?colorSecondaryVariant"
         app:layout_constraintStart_toStartOf="@+id/cnlProgress"
         app:layout_constraintBottom_toBottomOf="@+id/cnlProgress" />
 
