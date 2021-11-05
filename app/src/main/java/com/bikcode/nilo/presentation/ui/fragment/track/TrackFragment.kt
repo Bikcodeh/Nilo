@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.OrderDTO
 import com.bikcode.nilo.databinding.FragmentTrackBinding
 import com.bikcode.nilo.presentation.listener.OrderAux
+import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
+import com.bikcode.nilo.presentation.util.showToast
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TrackFragment: Fragment() {
 
@@ -41,6 +45,28 @@ class TrackFragment: Fragment() {
 
         order?.let {
             updateUI(it)
+            getOrderRealtime(it.id)
+        }
+    }
+
+    private fun getOrderRealtime(orderId: String) {
+        val db = FirebaseFirestore.getInstance()
+        val orderRef = db.collection(REQUESTS_COLLECTION).document(orderId)
+        
+        orderRef.addSnapshotListener { snapshot, error ->
+            if(error != null) {
+                activity?.showToast(R.string.error_fetching_data)
+                return@addSnapshotListener
+            }
+
+            if(snapshot != null && snapshot.exists()) {
+                val order = snapshot.toObject(OrderDTO::class.java)
+                order?.let {
+                    it.id = snapshot.id
+
+                    updateUI(it)
+                }
+            }
         }
     }
 
