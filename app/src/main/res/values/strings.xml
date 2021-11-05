@@ -29,6 +29,7 @@
     <string name="order_id">ID:</string>
     <string name="do_you_need_help">Do you need help?</string>
     <string name="buy_done">You got it!</string>
+    <string name="sign_out">Sign out</string>
 
 
 </resources>

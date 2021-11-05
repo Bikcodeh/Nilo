@@ -72,6 +72,7 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
 
         val user = FirebaseAuth.getInstance().currentUser
         user?.let { currentUser ->
+            enableUI(false)
             val products = hashMapOf<String, ProductOrder>()
             productCarAdapter.getProducts().forEach { product ->
                 products.put(
@@ -96,7 +97,17 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
 
                 }.addOnFailureListener {
                     context?.showToast(R.string.insert_error)
+                }.addOnCompleteListener {
+                    enableUI(true)
                 }
+        }
+    }
+
+    private fun enableUI(enable: Boolean) {
+        binding?.let {
+            it.ibCancelCart.isEnabled = enable
+            it.efaPay.isEnabled = enable
+            it.root.isEnabled = enable
         }
     }
 
