@@ -8,14 +8,17 @@ import com.bikcode.nilo.data.model.OrderDTO
 import com.bikcode.nilo.databinding.ActivityOrderBinding
 import com.bikcode.nilo.presentation.adapter.OrderAdapter
 import com.bikcode.nilo.presentation.listener.OnOrderListener
+import com.bikcode.nilo.presentation.listener.OrderAux
+import com.bikcode.nilo.presentation.ui.fragment.track.TrackFragment
 import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.google.firebase.firestore.FirebaseFirestore
 
-class OrderActivity : AppCompatActivity(), OnOrderListener {
+class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux{
 
     private lateinit var binding: ActivityOrderBinding
     private val ordersAdapter: OrderAdapter by lazy { OrderAdapter(this) }
+    private var orderSelected: OrderDTO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +51,18 @@ class OrderActivity : AppCompatActivity(), OnOrderListener {
     }
 
     override fun onTrack(order: OrderDTO) {
-        TODO("Not yet implemented")
+        orderSelected = order
+        val fragment = TrackFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.containerOrder, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onStartChat(order: OrderDTO) {
         TODO("Not yet implemented")
     }
+
+    override fun getOrderSelected(): OrderDTO? = orderSelected
 }
