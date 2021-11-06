@@ -37,5 +37,7 @@
     <string name="order_status_unknown">Unknown</string>
     <string name="order_history">Order History</string>
     <string name="track_title">Tracking</string>
+    <string name="type_here">Type here…</string>
+    <string name="chat_title">Chat support</string>
 
 </resources>
