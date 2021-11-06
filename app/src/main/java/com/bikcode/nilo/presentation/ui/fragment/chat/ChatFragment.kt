@@ -16,6 +16,7 @@ import com.bikcode.nilo.presentation.adapter.ChatAdapter
 import com.bikcode.nilo.presentation.listener.OnChatListener
 import com.bikcode.nilo.presentation.listener.OrderAux
 import com.bikcode.nilo.presentation.util.Constants.PATH_CHAT
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -63,8 +64,7 @@ class ChatFragment : Fragment(), OnChatListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun deleteMessage(message: Message) {
-    }
+    override fun deleteMessage(message: Message) {}
 
     private fun setupButtons() {
         with(binding) {
@@ -129,33 +129,44 @@ class ChatFragment : Fragment(), OnChatListener {
 
             val childListener = object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    val message = snapshot.getValue(Message::class.java)
-                    message?.let { messageToInsert ->
-                        snapshot.key?.let {
-                            messageToInsert.id = it
-                        }
-                        FirebaseAuth.getInstance().currentUser?.let {
-                            messageToInsert.uid = it.uid
-                        }
-
-                        chatAdapter.add(messageToInsert)
+                    getMessage(snapshot)?.let {
+                        chatAdapter.add(it)
                         binding.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
                     }
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    getMessage(snapshot)?.let {
+                        chatAdapter.update(it)
+                    }
                 }
 
                 override fun onChildRemoved(snapshot: DataSnapshot) {
+                    getMessage(snapshot)?.let {
+                        chatAdapter.delete(it)
+                    }
                 }
 
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                }
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
                 override fun onCancelled(error: DatabaseError) {
+                    Snackbar.make(binding.root, getString(R.string.error_chat), Snackbar.LENGTH_SHORT).show()
                 }
             }
             chatRef.addChildEventListener(childListener)
         }
+    }
+
+    private fun getMessage(snapshot: DataSnapshot): Message? {
+        snapshot.getValue(Message::class.java)?.let { message ->
+            snapshot.key?.let {
+                message.id = it
+            }
+            FirebaseAuth.getInstance().currentUser?.let {
+                message.uid = it.uid
+            }
+            return message
+        }
+        return null
     }
 }
