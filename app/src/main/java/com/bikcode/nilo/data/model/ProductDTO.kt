@@ -10,7 +10,8 @@ data class ProductDTO(
     var imgUrl: String? = null,
     var quantity: Int = 0,
     var price: Double = 0.0,
-    @get:Exclude var newQuantity: Int = 1
+    @get:Exclude var newQuantity: Int = 1,
+    var sellerId: String = ""
 ) {
     fun totalPrice(): Double = newQuantity * price
 

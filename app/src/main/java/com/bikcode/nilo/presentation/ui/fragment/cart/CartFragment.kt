@@ -80,7 +80,8 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
                     ProductOrder(
                         id = product.id!!,
                         name = product.name!!,
-                        quantity = product.newQuantity
+                        quantity = product.newQuantity,
+                        sellerId = product.sellerId
                     )
                 )
             }
