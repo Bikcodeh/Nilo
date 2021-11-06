@@ -11,8 +11,6 @@ k
 ;app/src/main/java/com/bikcode/nilo/data/model/ProductDTO.kt,3\0\306ff6d320098c59e9925adf9c84981368391c0c
 m
 =app/src/main/java/com/bikcode/nilo/data/model/ProductOrder.kt,5\8\587bdfc04e8adfdb09a695e4d1643a0dbc883e7b
-q
-Aapp/src/main/java/com/bikcode/nilo/presentation/util/Constants.kt,b\3\b3287a475eb1566c33fcabc0b72422d0d6d691a0
 {
 Kapp/src/main/java/com/bikcode/nilo/presentation/listener/OnOrderListener.kt,7\b\7b0684bb830f1da64697b2f4fe9386f0d62a02c4
 }
@@ -21,3 +19,9 @@ i
 9app/src/main/java/com/bikcode/nilo/data/model/OrderDTO.kt,0\8\08213708c4d36deafa7d305c503249e4c2c23bfb
 t
 Dapp/src/main/java/com/bikcode/nilo/presentation/listener/OrderAux.kt,f\4\f4b0aa91bafb9aff5d1d27706deeb968b101f8e6
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+{
+Kapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/MainActivity.kt,c\f\cf21861b7c2f1bfa176df8d36d6cb4d5a0841fbf
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164

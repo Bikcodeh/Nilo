@@ -15,8 +15,15 @@ import com.bikcode.nilo.databinding.FragmentChatBinding
 import com.bikcode.nilo.presentation.adapter.ChatAdapter
 import com.bikcode.nilo.presentation.listener.OnChatListener
 import com.bikcode.nilo.presentation.listener.OrderAux
+import com.bikcode.nilo.presentation.util.Constants.PATH_CHAT
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-class ChatFragment: Fragment(), OnChatListener {
+class ChatFragment : Fragment(), OnChatListener {
 
     private var _binding: FragmentChatBinding? = null
     private val binding: FragmentChatBinding get() = _binding!!
@@ -37,6 +44,7 @@ class ChatFragment: Fragment(), OnChatListener {
 
         getOrder()
         setupRecyclerView()
+        setupButtons()
     }
 
     override fun onDestroyView() {
@@ -49,14 +57,45 @@ class ChatFragment: Fragment(), OnChatListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             activity?.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun deleteMessage(message: Message) {
+    }
 
+    private fun setupButtons() {
+        with(binding) {
+            ibSend.setOnClickListener {
+                sendMessage()
+            }
+        }
+    }
+
+    private fun sendMessage() {
+        order?.let { order ->
+            val database = Firebase.database
+            val chatRef = database.getReference(PATH_CHAT).child(order.id)
+            val user = FirebaseAuth.getInstance().currentUser
+
+            user?.let {
+                val message = Message(
+                    message = binding.tieMessage.text.toString().trim(),
+                    sender = it.uid
+                )
+
+                binding.tieMessage.isEnabled = false
+
+                chatRef.push().setValue(message)
+                    .addOnSuccessListener {
+                        binding.tieMessage.setText("")
+                    }.addOnCompleteListener {
+                        binding.tieMessage.isEnabled = true
+                    }
+            }
+        }
     }
 
     private fun getOrder() {
@@ -84,5 +123,39 @@ class ChatFragment: Fragment(), OnChatListener {
     }
 
     private fun setupRealtimeDatabase() {
+        order?.let { order ->
+            val database = Firebase.database
+            val chatRef = database.getReference(PATH_CHAT).child(order.id)
+
+            val childListener = object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val message = snapshot.getValue(Message::class.java)
+                    message?.let { messageToInsert ->
+                        snapshot.key?.let {
+                            messageToInsert.id = it
+                        }
+                        FirebaseAuth.getInstance().currentUser?.let {
+                            messageToInsert.uid = it.uid
+                        }
+
+                        chatAdapter.add(messageToInsert)
+                        binding.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
+                    }
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            }
+            chatRef.addChildEventListener(childListener)
+        }
     }
 }

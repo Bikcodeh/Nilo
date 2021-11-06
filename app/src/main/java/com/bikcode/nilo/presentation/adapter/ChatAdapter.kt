@@ -51,8 +51,8 @@ class ChatAdapter(
         var background = ContextCompat.getDrawable(context, R.drawable.background_chat_client)
         var textColor = ContextCompat.getColor(context, R.color.colorOnSecondary)
 
-        val marginHorizontal = context.resources.getDimensionPixelSize(R.dimen.chat_margin_horizontal)
-        val params = binding.tvMessage.layoutParams as ViewGroup.MarginLayoutParams
+        private val marginHorizontal = context.resources.getDimensionPixelSize(R.dimen.chat_margin_horizontal)
+        private val params = binding.tvMessage.layoutParams as ViewGroup.MarginLayoutParams
 
         fun bind(message: Message) {
             params.marginStart = marginHorizontal
@@ -63,6 +63,8 @@ class ChatAdapter(
                 gravity = Gravity.START
                 background = ContextCompat.getDrawable(context, R.drawable.background_chat_support)
                 textColor = ContextCompat.getColor(context, R.color.colorOnPrimary)
+                params.marginStart = 0
+                params.marginEnd = marginHorizontal
             }
 
             if(adapterPosition > 0 && message.isSendByClient() != messages[adapterPosition - 1].isSendByClient()) {
@@ -70,6 +72,7 @@ class ChatAdapter(
             }
 
             binding.root.gravity = gravity
+            binding.tvMessage.layoutParams = params
             binding.tvMessage.background = (background)
             binding.tvMessage.setTextColor(textColor)
             binding.tvMessage.text = message.message
