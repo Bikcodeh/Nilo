@@ -53,7 +53,7 @@ class ChatFragment : Fragment(), OnChatListener {
         _binding = null
         (activity as? AppCompatActivity)?.let {
             it.supportActionBar?.title = getString(R.string.order_history)
-            it.supportActionBar?.setDisplayShowHomeEnabled(false)
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
     }
 
@@ -64,7 +64,19 @@ class ChatFragment : Fragment(), OnChatListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun deleteMessage(message: Message) {}
+    override fun deleteMessage(message: Message) {
+        order?.let {
+            val database = Firebase.database
+            val messageRef = database.getReference(PATH_CHAT).child(it.id).child(message.id)
+            messageRef.removeValue { error, ref ->
+                if(error != null) {
+                    Snackbar.make(binding.root, getString(R.string.error_delete_message), Snackbar.LENGTH_SHORT).show()
+                } else{
+                    Snackbar.make(binding.root, getString(R.string.delete_message), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     private fun setupButtons() {
         with(binding) {
@@ -108,7 +120,7 @@ class ChatFragment : Fragment(), OnChatListener {
 
     private fun setupActionBar() {
         (activity as? AppCompatActivity)?.let {
-            it.supportActionBar?.setDisplayShowHomeEnabled(true)
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             it.supportActionBar?.title = getString(R.string.chat_title)
         }
     }
