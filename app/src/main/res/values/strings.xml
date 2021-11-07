@@ -42,5 +42,7 @@
     <string name="error_chat">An error has occurred</string>
     <string name="error_delete_message">An error has occurred deleting message</string>
     <string name="delete_message">Message deleted!</string>
+    <string name="notification_channel_id_default">general</string>
+    <string name="generals">Generals</string>
 
 </resources>

@@ -25,3 +25,15 @@ Rapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/track/TrackFragment
 Lapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/OrderActivity.kt,c\6\c6b77795d1f0a47d2eab782065146ae8a6af4f9a
 v
 Fapp/src/main/java/com/bikcode/nilo/presentation/adapter/ChatAdapter.kt,f\d\fde68d68d0d2ee5b073ee189ef34f94f14bc36ee
+€
+Papp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/chat/ChatFragment.kt,7\6\76cb07cf640478d9a6be3e087151114439f8ea98
+m
+=app/src/main/java/com/bikcode/nilo/data/model/ProductOrder.kt,5\8\587bdfc04e8adfdb09a695e4d1643a0dbc883e7b
+€
+Papp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/cart/CartFragment.kt,3\7\37b56cebb75cf4a35b856e97b6c528d0215ea8cb
+i
+9app/src/main/java/com/bikcode/nilo/data/model/OrderDTO.kt,0\8\08213708c4d36deafa7d305c503249e4c2c23bfb
+k
+;app/src/main/java/com/bikcode/nilo/data/model/ProductDTO.kt,3\0\306ff6d320098c59e9925adf9c84981368391c0c
+h
+8app/src/main/java/com/bikcode/nilo/data/model/Message.kt,3\e\3e9041ecff2e8685ffaec8895a6816dad8db1cdb
