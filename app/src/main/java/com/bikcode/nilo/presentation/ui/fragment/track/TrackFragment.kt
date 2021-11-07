@@ -13,7 +13,11 @@ import com.bikcode.nilo.databinding.FragmentTrackBinding
 import com.bikcode.nilo.presentation.listener.OrderAux
 import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class TrackFragment: Fragment() {
 
@@ -21,6 +25,8 @@ class TrackFragment: Fragment() {
     private val binding: FragmentTrackBinding get() = _binding!!
 
     private var order: OrderDTO? = null
+
+    private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +71,13 @@ class TrackFragment: Fragment() {
             updateUI(it)
             getOrderRealtime(it.id)
             setupActionBar()
+            fireEvent()
+        }
+    }
+
+    private fun fireEvent() {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.METHOD, "check_track")
         }
     }
 

@@ -27,10 +27,14 @@ import com.bikcode.nilo.presentation.util.showToast
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     private lateinit var firestoreListener: ListenerRegistration
     private var productSelected: ProductDTO? = null
     private val products = mutableListOf<ProductDTO>()
+    private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -220,6 +225,11 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
             .addToBackStack(null)
             .commit()
         showButton(isVisible = false)
+
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, product.id!!)
+            param(FirebaseAnalytics.Param.ITEM_NAME, product.name!!)
+        }
     }
 
     override fun getProductsCart(): MutableList<ProductDTO> = products

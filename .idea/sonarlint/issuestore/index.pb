@@ -19,8 +19,6 @@ w
 Gapp/src/main/java/com/bikcode/nilo/presentation/adapter/OrderAdapter.kt,0\e\0e2d0e0feadc61979950ba95cd6e82c467a97f9b
 „
 Tapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/DetailFragment.kt,1\b\1b55061213bef0ec3cc43a71ae312b6921ae729b
-‚
-Rapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/track/TrackFragment.kt,5\c\5c4ae1c4315e43d9107c94c2811661b526b502dc
 |
 Lapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/OrderActivity.kt,c\6\c6b77795d1f0a47d2eab782065146ae8a6af4f9a
 v
