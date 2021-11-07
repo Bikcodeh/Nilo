@@ -13,8 +13,6 @@ Kapp/src/main/java/com/bikcode/nilo/presentation/listener/OnOrderListener.kt,7\
 Mapp/src/main/java/com/bikcode/nilo/presentation/adapter/ProductCartAdapter.kt,a\f\afa903138fac6a4ea40129ece59f26a8eaccdcb0
 t
 Dapp/src/main/java/com/bikcode/nilo/presentation/listener/OrderAux.kt,f\4\f4b0aa91bafb9aff5d1d27706deeb968b101f8e6
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 {
 Kapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/MainActivity.kt,c\f\cf21861b7c2f1bfa176df8d36d6cb4d5a0841fbf
 z
@@ -29,5 +27,3 @@ Rapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/track/TrackFragment
 Lapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/OrderActivity.kt,c\6\c6b77795d1f0a47d2eab782065146ae8a6af4f9a
 v
 Fapp/src/main/java/com/bikcode/nilo/presentation/adapter/ChatAdapter.kt,f\d\fde68d68d0d2ee5b073ee189ef34f94f14bc36ee
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164

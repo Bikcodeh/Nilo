@@ -6,4 +6,7 @@ object Constants {
 
     //Realtime database
     const val PATH_CHAT = "chats"
+
+    //FCM
+    const val PROPERTY_TOKEN = "token"
 }
