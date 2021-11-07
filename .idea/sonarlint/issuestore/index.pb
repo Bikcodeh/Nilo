@@ -13,8 +13,6 @@ Kapp/src/main/java/com/bikcode/nilo/presentation/listener/OnOrderListener.kt,7\
 Mapp/src/main/java/com/bikcode/nilo/presentation/adapter/ProductCartAdapter.kt,a\f\afa903138fac6a4ea40129ece59f26a8eaccdcb0
 t
 Dapp/src/main/java/com/bikcode/nilo/presentation/listener/OrderAux.kt,f\4\f4b0aa91bafb9aff5d1d27706deeb968b101f8e6
-{
-Kapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/MainActivity.kt,c\f\cf21861b7c2f1bfa176df8d36d6cb4d5a0841fbf
 z
 Japp/src/main/java/com/bikcode/nilo/presentation/listener/OnChatListener.kt,5\d\5d1a970e6d578eae860294982312abb0f381fca5
 w

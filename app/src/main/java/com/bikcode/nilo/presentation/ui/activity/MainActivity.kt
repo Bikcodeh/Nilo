@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
@@ -18,6 +20,9 @@ import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
 import com.bikcode.nilo.presentation.ui.fragment.detail.DetailFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
+import com.bikcode.nilo.presentation.util.Constants.PROPERTY_TOKEN
+import com.bikcode.nilo.presentation.util.Constants.TOKENS_COLLECTION
+import com.bikcode.nilo.presentation.util.Constants.USERS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -46,6 +51,25 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user != null) {
                     Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show()
+
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    val token = preferences.getString(PROPERTY_TOKEN, null)
+                    token?.let {
+                        val db = FirebaseFirestore.getInstance()
+                        val tokenMap = hashMapOf(Pair(PROPERTY_TOKEN, token))
+                        db.collection(USERS_COLLECTION)
+                            .document(user.uid)
+                            .collection(TOKENS_COLLECTION)
+                            .add(tokenMap).addOnSuccessListener {
+                                preferences.edit {
+                                    putString(PROPERTY_TOKEN, null)
+                                }
+                            }
+                            .addOnFailureListener {
+
+                            }
+                    }
+
                 } else {
                     Toast.makeText(this, "Not logged", Toast.LENGTH_SHORT).show()
                 }
