@@ -11,4 +11,5 @@
     <dimen name="chat_guideline_end">48dp</dimen>
     <dimen name="chat_stroke">1dp</dimen>
     <dimen name="chat_margin_horizontal">64dp</dimen>
+    <dimen name="login_button_default_width">160dp</dimen>
 </resources>
