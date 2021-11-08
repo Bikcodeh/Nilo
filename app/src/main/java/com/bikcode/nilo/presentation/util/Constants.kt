@@ -11,4 +11,7 @@ object Constants {
 
     //FCM
     const val PROPERTY_TOKEN = "token"
+
+    //Analytics
+    const val USER_PROP_QUANTITY = "quantity_product"
 }

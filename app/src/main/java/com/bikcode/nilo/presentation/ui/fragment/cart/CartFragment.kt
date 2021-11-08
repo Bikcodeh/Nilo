@@ -16,12 +16,17 @@ import com.bikcode.nilo.presentation.listener.MainAux
 import com.bikcode.nilo.presentation.listener.OnCartListener
 import com.bikcode.nilo.presentation.ui.activity.OrderActivity
 import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
+import com.bikcode.nilo.presentation.util.Constants.USER_PROP_QUANTITY
 import com.bikcode.nilo.presentation.util.showToast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class CartFragment : BottomSheetDialogFragment(), OnCartListener {
 
@@ -32,6 +37,8 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
     private lateinit var productCarAdapter: ProductCartAdapter
 
     protected var totalPrice = 0.0
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentCartBinding.inflate(LayoutInflater.from(activity))
@@ -44,6 +51,7 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
             setupRecycler()
             setupButtons()
             getProducts()
+            setupAnalytics()
 
             return bottomSheetDialog
         }
@@ -66,6 +74,10 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
                 requestOrder()
             }
         }
+    }
+
+    private fun setupAnalytics() {
+        firebaseAnalytics = Firebase.analytics
     }
 
     private fun requestOrder() {
@@ -94,6 +106,19 @@ class CartFragment : BottomSheetDialogFragment(), OnCartListener {
                     dismiss()
                     (activity as? MainAux)?.clearCart()
                     context?.showToast(R.string.buy_done)
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_SHIPPING_INFO) {
+                        val products = mutableListOf<Bundle>()
+                        order.products.forEach {
+                            if(it.value.quantity > 5) {
+                                val bundle = Bundle()
+                                bundle.putString("id_product", it.key)
+                                products.add(bundle)
+                            }
+                        }
+
+                        param(FirebaseAnalytics.Param.QUANTITY, products.toTypedArray())
+                    }
+                    firebaseAnalytics.setUserProperty(USER_PROP_QUANTITY, if(products.size > 0) "mayoreo" else "without_mayoreo")
                     startActivity(Intent(context, OrderActivity::class.java))
 
                 }.addOnFailureListener {
