@@ -1,8 +1,12 @@
 package com.bikcode.nilo.presentation.ui.activity
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,6 +39,8 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
+import java.security.MessageDigest
 
 class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
@@ -137,7 +143,8 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
             } else {
                 val providers = arrayListOf(
                     AuthUI.IdpConfig.EmailBuilder().build(),
-                    AuthUI.IdpConfig.GoogleBuilder().build()
+                    AuthUI.IdpConfig.GoogleBuilder().build(),
+                    AuthUI.IdpConfig.FacebookBuilder().build()
                 )
 
                 resultLauncher.launch(
@@ -148,6 +155,32 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                         .build()
                 )
             }
+        }
+        try {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                var info = packageManager.getPackageInfo(
+                    "com.bikcode.nilo",
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                )
+                for(signature in info.signingInfo.apkContentsSigners) {
+                    val md = MessageDigest.getInstance("SHA")
+                    md.update(signature.toByteArray())
+                    Log.d(" API >= 28 KeyHas: ", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+                }
+
+            } else {
+                val info = packageManager.getPackageInfo(
+                    "com.bikcode.nilo",
+                    PackageManager.GET_SIGNATURES
+                )
+                for(signature in info.signatures) {
+                    val md = MessageDigest.getInstance("SHA")
+                    md.update(signature.toByteArray())
+                    Log.d("API < 28 KeyHash: ", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+                }
+            }
+        }catch (exception: Exception) {
+            exception.printStackTrace()
         }
     }
 

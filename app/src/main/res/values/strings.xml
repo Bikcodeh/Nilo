@@ -45,4 +45,9 @@
     <string name="notification_channel_id_default">general</string>
     <string name="generals">Generals</string>
 
+    <!-- Facebook login-->
+    <string name="facebook_application_id" translatable="false">1260857794416315</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1260857794416315</string>
+
+
 </resources>
