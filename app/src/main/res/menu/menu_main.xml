@@ -10,4 +10,8 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_history" />
 
+    <item android:id="@+id/action_profile"
+        android:title="@string/profile"
+        app:showAsAction="never" />
+
 </menu>

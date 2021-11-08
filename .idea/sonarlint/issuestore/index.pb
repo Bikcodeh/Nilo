@@ -5,8 +5,6 @@ q
 Aapp/src/main/java/com/bikcode/nilo/presentation/util/Extension.kt,2\c\2ce675bbb1834a380f176c76c8b1f18055b53ff5
 }
 Mapp/src/main/java/com/bikcode/nilo/presentation/listener/OnProductListener.kt,b\f\bfb33aaa3863e4c94a52800d11385662858e81f9
-y
-Iapp/src/main/java/com/bikcode/nilo/presentation/adapter/ProductAdapter.kt,e\a\ea38184a20ee18f26452cb594e3600433ba6c0a7
 {
 Kapp/src/main/java/com/bikcode/nilo/presentation/listener/OnOrderListener.kt,7\b\7b0684bb830f1da64697b2f4fe9386f0d62a02c4
 }

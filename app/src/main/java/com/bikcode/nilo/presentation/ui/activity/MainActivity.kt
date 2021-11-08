@@ -23,6 +23,7 @@ import com.bikcode.nilo.presentation.listener.MainAux
 import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
 import com.bikcode.nilo.presentation.ui.fragment.detail.DetailFragment
+import com.bikcode.nilo.presentation.ui.fragment.profile.ProfileFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
 import com.bikcode.nilo.presentation.util.Constants.PROPERTY_TOKEN
 import com.bikcode.nilo.presentation.util.Constants.TOKENS_COLLECTION
@@ -36,6 +37,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -138,7 +140,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
         authStateListener = FirebaseAuth.AuthStateListener { auth ->
             if (auth.currentUser != null) {
-                supportActionBar?.title = auth.currentUser?.displayName
+                updateTitle(auth.currentUser!!)
                 binding.lyProgress.visibility = View.GONE
                 binding.nsvProducts.visibility = View.VISIBLE
             } else {
@@ -256,6 +258,16 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                     }
             }
             R.id.action_history -> startActivity(Intent(this, OrderActivity::class.java))
+            R.id.action_profile -> {
+                val fragment = ProfileFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.containerMain, fragment)
+                    .addToBackStack(null)
+                    .commit()
+
+                showButton(false)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -298,6 +310,10 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
         }
 
         updateTotal()
+    }
+
+    override fun updateTitle(user: FirebaseUser) {
+        supportActionBar?.title = user.displayName
     }
 
     override fun updateTotal() {
