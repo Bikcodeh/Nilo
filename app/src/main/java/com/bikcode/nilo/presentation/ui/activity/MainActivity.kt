@@ -166,6 +166,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                         .setIsSmartLockEnabled(false)
                         .setTosAndPrivacyPolicyUrls("https://www.facebook.com/", "https://www.facebook.com/")
                         .setAuthMethodPickerLayout(loginView)
+                        .setTheme(R.style.LoginTheme)
                         .build()
                 )
             }
