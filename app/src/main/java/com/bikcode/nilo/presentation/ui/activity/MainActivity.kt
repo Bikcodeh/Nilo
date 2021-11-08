@@ -28,6 +28,7 @@ import com.bikcode.nilo.presentation.util.Constants.PROPERTY_TOKEN
 import com.bikcode.nilo.presentation.util.Constants.TOKENS_COLLECTION
 import com.bikcode.nilo.presentation.util.Constants.USERS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -148,11 +149,23 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                     AuthUI.IdpConfig.PhoneBuilder().build()
                 )
 
+                val loginView = AuthMethodPickerLayout.
+                        Builder(R.layout.view_login)
+                    .setEmailButtonId(R.id.btnEmail)
+                    .setGoogleButtonId(R.id.btnGoogle)
+                    .setFacebookButtonId(R.id.btnFacebook)
+                    .setPhoneButtonId(R.id.btnPhone)
+                    .setTosAndPrivacyPolicyId(R.id.tvPolicy)
+                    .build()
+
+
                 resultLauncher.launch(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false)
+                        .setTosAndPrivacyPolicyUrls("https://www.facebook.com/", "https://www.facebook.com/")
+                        .setAuthMethodPickerLayout(loginView)
                         .build()
                 )
             }
