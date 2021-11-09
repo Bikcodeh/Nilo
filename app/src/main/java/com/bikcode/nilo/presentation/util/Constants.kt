@@ -14,4 +14,7 @@ object Constants {
 
     //Analytics
     const val USER_PROP_QUANTITY = "quantity_product"
+
+    //Queries
+    const val PROP_DATE = "date"
 }

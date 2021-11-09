@@ -11,9 +11,11 @@ import com.bikcode.nilo.presentation.listener.OnOrderListener
 import com.bikcode.nilo.presentation.listener.OrderAux
 import com.bikcode.nilo.presentation.ui.fragment.chat.ChatFragment
 import com.bikcode.nilo.presentation.ui.fragment.track.TrackFragment
+import com.bikcode.nilo.presentation.util.Constants.PROP_DATE
 import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux{
 
@@ -32,7 +34,9 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux{
 
     private fun setupFirestore() {
         val db = FirebaseFirestore.getInstance()
-        db.collection(REQUESTS_COLLECTION).get()
+        db.collection(REQUESTS_COLLECTION)
+            .orderBy(PROP_DATE, Query.Direction.DESCENDING)
+            .get()
             .addOnSuccessListener {
                 for(document in it) {
                     val order = document.toObject(OrderDTO::class.java)
