@@ -7,6 +7,7 @@
     android:layout_margin="@dimen/common_padding_default">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerItemProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -47,5 +48,14 @@
             tools:text="$12.00 USD"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/load_more"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </com.google.android.material.card.MaterialCardView>

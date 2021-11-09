@@ -3,7 +3,6 @@ package com.bikcode.nilo.presentation.ui.activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -12,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -41,8 +41,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import java.lang.Exception
 import java.security.MessageDigest
 
 class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var productAdapter: ProductAdapter
     private lateinit var firestoreListener: ListenerRegistration
+    private var queryPagination: Query? = null
     private var productSelected: ProductDTO? = null
     private val products = mutableListOf<ProductDTO>()
     private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
@@ -83,7 +84,6 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
                             }
                     }
-
                 } else {
                     Toast.makeText(this, "Not logged", Toast.LENGTH_SHORT).show()
                 }
@@ -116,12 +116,13 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
     private fun setupListeners() {
         binding.btnShoppingCart.setOnClickListener {
             val fragment = CartFragment()
-            fragment.show(supportFragmentManager.beginTransaction(), CartFragment::class.java.simpleName)
+            fragment.show(supportFragmentManager.beginTransaction(),
+                CartFragment::class.java.simpleName)
         }
     }
 
     private fun setupRecycler() {
-        productAdapter = ProductAdapter()
+        productAdapter = ProductAdapter(mutableListOf(ProductDTO()))
         productAdapter.setListener(this)
         binding.rvProducts.apply {
             layoutManager = GridLayoutManager(
@@ -131,6 +132,35 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                 false
             )
             adapter = productAdapter
+        }
+    }
+
+    override fun loadMore() {
+        val db = FirebaseFirestore.getInstance()
+        val productRef = db.collection(PRODUCTS_COLLECTION)
+
+        queryPagination?.let {
+            it.addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    showToast(R.string.error_fetching_data)
+                    return@addSnapshotListener
+                }
+
+                snapshots?.let { items ->
+                    val lastItem = items.documents[items.size() -1]
+                    queryPagination = productRef.startAfter(lastItem).limit(2)
+
+                    for (snapshot in items.documentChanges) {
+                        val product = snapshot.document.toObject(ProductDTO::class.java)
+                        product.id = snapshot.document.id
+                        when (snapshot.type) {
+                            DocumentChange.Type.ADDED -> productAdapter.add(product)
+                            DocumentChange.Type.REMOVED -> productAdapter.delete(product)
+                            DocumentChange.Type.MODIFIED -> productAdapter.update(product)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -151,8 +181,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                     AuthUI.IdpConfig.PhoneBuilder().build()
                 )
 
-                val loginView = AuthMethodPickerLayout.
-                        Builder(R.layout.view_login)
+                val loginView = AuthMethodPickerLayout.Builder(R.layout.view_login)
                     .setEmailButtonId(R.id.btnEmail)
                     .setGoogleButtonId(R.id.btnGoogle)
                     .setFacebookButtonId(R.id.btnFacebook)
@@ -166,7 +195,8 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false)
-                        .setTosAndPrivacyPolicyUrls("https://www.facebook.com/", "https://www.facebook.com/")
+                        .setTosAndPrivacyPolicyUrls("https://www.facebook.com/",
+                            "https://www.facebook.com/")
                         .setAuthMethodPickerLayout(loginView)
                         .setTheme(R.style.LoginTheme)
                         .build()
@@ -174,29 +204,28 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
             }
         }
         try {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 var info = packageManager.getPackageInfo(
                     "com.bikcode.nilo",
                     PackageManager.GET_SIGNING_CERTIFICATES
                 )
-                for(signature in info.signingInfo.apkContentsSigners) {
+                for (signature in info.signingInfo.apkContentsSigners) {
                     val md = MessageDigest.getInstance("SHA")
                     md.update(signature.toByteArray())
                     Log.d(" API >= 28 KeyHas: ", Base64.encodeToString(md.digest(), Base64.DEFAULT))
                 }
-
             } else {
                 val info = packageManager.getPackageInfo(
                     "com.bikcode.nilo",
                     PackageManager.GET_SIGNATURES
                 )
-                for(signature in info.signatures) {
+                for (signature in info.signatures) {
                     val md = MessageDigest.getInstance("SHA")
                     md.update(signature.toByteArray())
                     Log.d("API < 28 KeyHash: ", Base64.encodeToString(md.digest(), Base64.DEFAULT))
                 }
             }
-        }catch (exception: Exception) {
+        } catch (exception: Exception) {
             exception.printStackTrace()
         }
     }
@@ -205,29 +234,35 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
         val db = FirebaseFirestore.getInstance()
         val productRef = db.collection(PRODUCTS_COLLECTION)
 
-        firestoreListener = productRef.addSnapshotListener { snapshots, error ->
-            if(error != null) {
-                showToast(R.string.error_fetching_data)
-                return@addSnapshotListener
-            }
+        firestoreListener = productRef
+            .limit(2)
+            .addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    showToast(R.string.error_fetching_data)
+                    return@addSnapshotListener
+                }
 
-            for(snapshot in snapshots!!.documentChanges) {
-                val product = snapshot.document.toObject(ProductDTO::class.java)
-                product.id = snapshot.document.id
-                when(snapshot.type) {
-                    DocumentChange.Type.ADDED -> productAdapter.add(product)
-                    DocumentChange.Type.REMOVED -> productAdapter.delete(product)
-                    DocumentChange.Type.MODIFIED -> productAdapter.update(product)
+                snapshots?.let { items ->
+                    val lastItem = items.documents[items.size() -1]
+                    queryPagination = productRef.startAfter(lastItem).limit(2)
+
+                    for (snapshot in items.documentChanges) {
+                        val product = snapshot.document.toObject(ProductDTO::class.java)
+                        product.id = snapshot.document.id
+                        when (snapshot.type) {
+                            DocumentChange.Type.ADDED -> productAdapter.add(product)
+                            DocumentChange.Type.REMOVED -> productAdapter.delete(product)
+                            DocumentChange.Type.MODIFIED -> productAdapter.update(product)
+                        }
+                    }
                 }
             }
-        }
     }
 
     override fun onResume() {
         super.onResume()
         firebaseAuth.addAuthStateListener(authStateListener)
         setupFirestoreRealtime()
-
     }
 
     override fun onPause() {
@@ -274,7 +309,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun onClick(product: ProductDTO) {
         val index = products.indexOf(product)
-        productSelected = if(index != -1) {
+        productSelected = if (index != -1) {
             products[index]
         } else {
             product
@@ -303,7 +338,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun addToCart(productDTO: ProductDTO) {
         val index = products.indexOf(productDTO)
-        if(index != -1) {
+        if (index != -1) {
             products[index] = productDTO
         } else {
             products.add(productDTO)
@@ -322,7 +357,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
             total += productDTO.totalPrice()
         }
 
-        if(total == 0.0) {
+        if (total == 0.0) {
             binding.tvTotal.text = getString(R.string.product_empty_cart)
         } else {
             binding.tvTotal.text = getString(R.string.cart_full, total)

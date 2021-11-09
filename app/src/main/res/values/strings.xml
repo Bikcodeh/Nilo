@@ -59,6 +59,7 @@
     <string name="profile">Profile</string>
     <string name="error_profile_update">An error has occurred trying to update profile</string>
     <string name="profile_title">Profile</string>
+    <string name="load_more">More</string>
 
 
 </resources>

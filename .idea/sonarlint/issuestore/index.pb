@@ -3,8 +3,6 @@
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 q
 Aapp/src/main/java/com/bikcode/nilo/presentation/util/Extension.kt,2\c\2ce675bbb1834a380f176c76c8b1f18055b53ff5
-}
-Mapp/src/main/java/com/bikcode/nilo/presentation/listener/OnProductListener.kt,b\f\bfb33aaa3863e4c94a52800d11385662858e81f9
 {
 Kapp/src/main/java/com/bikcode/nilo/presentation/listener/OnOrderListener.kt,7\b\7b0684bb830f1da64697b2f4fe9386f0d62a02c4
 }

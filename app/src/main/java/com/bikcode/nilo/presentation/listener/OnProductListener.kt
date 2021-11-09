@@ -4,4 +4,5 @@ import com.bikcode.nilo.data.model.ProductDTO
 
 interface OnProductListener {
     fun onClick(product: ProductDTO)
+    fun loadMore()
 }

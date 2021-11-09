@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
@@ -13,9 +14,9 @@ import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val products: MutableList<ProductDTO> = mutableListOf()): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    private val products: MutableList<ProductDTO> = mutableListOf()
+    //private val products: MutableList<ProductDTO> = mutableListOf()
     private lateinit var listener: OnProductListener
     private lateinit var context: Context
 
@@ -32,8 +33,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     fun add(productDTO: ProductDTO) {
         if(products.contains(productDTO).not()) {
-            products.add(productDTO)
-            notifyItemInserted(products.count() - 1)
+            products.add(products.size - 1, productDTO)
+            notifyItemInserted(products.size - 2)
         } else {
             update(productDTO)
         }
@@ -62,21 +63,33 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
         fun bind(productDTO: ProductDTO) {
             with(binding) {
-                tvName.text = productDTO.name
-                tvPrice.text = productDTO.price.toString()
-                tvQuantity.text = productDTO.quantity.toString()
 
-                Glide.with(context)
-                    .load(productDTO.imgUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
-                    .into(imgProduct)
+                if(productDTO.id == null) {
+                    btnLoadMore.isVisible = true
+                    containerItemProduct.isVisible = false
+                } else {
+                    containerItemProduct.isVisible = true
+                    btnLoadMore.isVisible = false
+                    tvName.text = productDTO.name
+                    tvPrice.text = productDTO.price.toString()
+                    tvQuantity.text = productDTO.quantity.toString()
+
+                    Glide.with(context)
+                        .load(productDTO.imgUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .centerCrop()
+                        .into(imgProduct)
+                }
             }
         }
 
         fun setListener(productDTO: ProductDTO) {
             binding.root.setOnClickListener {
                 listener.onClick(productDTO)
+            }
+
+            binding.btnLoadMore.setOnClickListener {
+                listener.loadMore()
             }
         }
     }
