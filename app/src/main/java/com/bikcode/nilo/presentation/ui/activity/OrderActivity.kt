@@ -13,6 +13,7 @@ import com.bikcode.nilo.presentation.ui.fragment.chat.ChatFragment
 import com.bikcode.nilo.presentation.ui.fragment.track.TrackFragment
 import com.bikcode.nilo.presentation.util.Constants.PROP_CLIENT_ID
 import com.bikcode.nilo.presentation.util.Constants.PROP_DATE
+import com.bikcode.nilo.presentation.util.Constants.PROP_STATUS
 import com.bikcode.nilo.presentation.util.Constants.REQUESTS_COLLECTION
 import com.bikcode.nilo.presentation.util.showToast
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +40,9 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux{
             val db = FirebaseFirestore.getInstance()
             db.collection(REQUESTS_COLLECTION)
                 //.orderBy(PROP_DATE, Query.Direction.DESCENDING)
-                .whereEqualTo(PROP_CLIENT_ID, user.uid)
+                //.whereEqualTo(PROP_CLIENT_ID, user.uid)
+                //.whereIn(PROP_STATUS, listOf(1, 2))
+                .whereNotIn(PROP_STATUS, listOf(4))
                 .get()
                 .addOnSuccessListener {
                     for(document in it) {
