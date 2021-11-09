@@ -19,4 +19,5 @@ object Constants {
     const val PROP_DATE = "date"
     const val PROP_CLIENT_ID = "clientId"
     const val PROP_STATUS = "status"
+    const val PROP_QUANTITY = "quantity"
 }

@@ -29,8 +29,6 @@ h
 8app/src/main/java/com/bikcode/nilo/data/model/Message.kt,3\e\3e9041ecff2e8685ffaec8895a6816dad8db1cdb
 m
 =app/src/main/java/com/bikcode/nilo/data/service/FCMService.kt,8\b\8bc72e71870bad6416b601b6f2c560e387d2dbad
-€
-Papp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/cart/CartFragment.kt,3\7\37b56cebb75cf4a35b856e97b6c528d0215ea8cb
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 @
