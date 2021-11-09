@@ -42,7 +42,11 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux{
                 //.orderBy(PROP_DATE, Query.Direction.DESCENDING)
                 //.whereEqualTo(PROP_CLIENT_ID, user.uid)
                 //.whereIn(PROP_STATUS, listOf(1, 2))
-                .whereNotIn(PROP_STATUS, listOf(4))
+                //.whereNotIn(PROP_STATUS, listOf(4))
+                //.whereGreaterThan(PROP_STATUS, 2)
+                //.whereLessThan(PROP_STATUS, 4)
+                //.whereEqualTo(PROP_STATUS, 3)
+                .whereGreaterThanOrEqualTo(PROP_STATUS, 2)
                 .get()
                 .addOnSuccessListener {
                     for(document in it) {
