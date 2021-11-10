@@ -69,5 +69,6 @@
     <string name="notifications_activated">Notifications activated</string>
     <string name="notifications_deactivated">Notifications desactivated</string>
     <string name="settings">Settings</string>
+    <string name="settings_topic_offers">topic_offers</string>
 
 </resources>
