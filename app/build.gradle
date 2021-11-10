@@ -62,6 +62,9 @@ dependencies {
     //Analytics
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    //Cloud storage
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
 
     //firebase ui facebook
     implementation 'com.facebook.android:facebook-android-sdk:8.1.0'

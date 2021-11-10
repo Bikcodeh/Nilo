@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                 }
 
                 snapshots?.let { items ->
-                    val lastItem = items.documents[items.size() -1]
+                    val lastItem = items.documents[items.size() - 1]
                     queryPagination = productRef.startAfter(lastItem).limit(2)
 
                     for (snapshot in items.documentChanges) {
@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
                 }
 
                 snapshots?.let { items ->
-                    val lastItem = items.documents[items.size() -1]
+                    val lastItem = items.documents[items.size() - 1]
                     queryPagination = productRef.startAfter(lastItem).limit(2)
 
                     for (snapshot in items.documentChanges) {
