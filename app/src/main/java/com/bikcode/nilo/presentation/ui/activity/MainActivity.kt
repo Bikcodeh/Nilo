@@ -303,6 +303,7 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
 
                 showButton(false)
             }
+            R.id.actions_settings -> startActivity(Intent(this, SettingsActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

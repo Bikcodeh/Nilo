@@ -9,4 +9,8 @@
         <!-- On API 21+ you can use android:statusBarColor -->
         <item name="colorPrimaryDark">@color/blue_gray_800_dark</item>
     </style>
+
+    <style name="PreferencesTheme" parent="Theme.Nilo">
+        <item name="colorOnPrimary">@color/yellow_a400_dark</item>
+    </style>
 </resources>
