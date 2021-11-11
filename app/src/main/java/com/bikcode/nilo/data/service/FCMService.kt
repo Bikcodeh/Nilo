@@ -48,21 +48,26 @@ class FCMService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
 
         remoteMessage.notification?.let {
-            val imageUrl = "https://rockthebestmusic.com/wp-content/uploads/2020/05/bandas-rock.jpg"
-            Glide.with(this)
-                .asBitmap()
-                .load(imageUrl)
-                .into(object : CustomTarget<Bitmap?>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap?>?,
-                    ) {
-                        sendNotification(it, resource)
-                    }
+            //val imageUrl = "https://rockthebestmusic.com/wp-content/uploads/2020/05/bandas-rock.jpg"
+            val imageUrl = it.imageUrl
 
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
-            sendNotification(it)
+            imageUrl?.let { uriImage ->
+                Glide.with(this)
+                    .asBitmap()
+                    .load(uriImage)
+                    .into(object : CustomTarget<Bitmap?>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap?>?,
+                        ) {
+                            sendNotification(it, resource)
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
+            } ?: run {
+                sendNotification(it)
+            }
         }
     }
 
@@ -80,8 +85,13 @@ class FCMService : FirebaseMessagingService() {
             .setColor(ContextCompat.getColor(this, R.color.yellow_a400))
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
-            .setLargeIcon(bitmap)
-            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(notification.body))
+
+            bitmap?.let {
+             notificationBuilder
+                 .setLargeIcon(bitmap)
+                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null))
+            }
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
