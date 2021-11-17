@@ -43,6 +43,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import java.security.MessageDigest
 
 class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
@@ -108,9 +110,49 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configRemoteConfig()
+        configToolbar()
         configAuth()
         setupRecycler()
         setupListeners()
+    }
+
+    private fun configToolbar() {
+
+    }
+
+    private fun configRemoteConfig() {
+        val remoteConfig = Firebase.remoteConfig
+
+        val configSettings = remoteConfigSettings {
+            //minimumFetchIntervalInSeconds = 3600 // = 1s * 60s * 60m = 1h
+            minimumFetchIntervalInSeconds = 5
+        }
+
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+        remoteConfig.fetchAndActivate()
+            .addOnSuccessListener {
+            //This message only for test
+                showToast("Remote data")
+            }.addOnFailureListener {
+                showToast("Error remote data")
+            }.addOnCompleteListener {
+                if(it.isSuccessful) {
+                    val isPromoDay = remoteConfig.getBoolean("isPromoDay")
+                    val promCounter = remoteConfig.getLong("promCounter")
+                    val percentaje = remoteConfig.getDouble("percentaje")
+                    val photoUrl = remoteConfig.getString("photoUrl")
+                    val message = remoteConfig.getString("message")
+
+                    if(isPromoDay.not()) {
+                        showToast("No promos")
+                    } else {
+                        showToast("Yaaaas promos")
+                    }
+                }
+            }
     }
 
     private fun setupListeners() {

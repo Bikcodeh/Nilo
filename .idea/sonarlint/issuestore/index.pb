@@ -41,8 +41,6 @@ Aapp/src/main/java/com/bikcode/nilo/presentation/util/Constants.kt,b\3\b3287a47
 Vapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/profile/ProfileFragment.kt,2\0\2003cb0e7f7c83b9dca44a7f6225f11fa460649d
 
 Oapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/SettingsActivity.kt,4\c\4cf2bf1d905daecdd2a48257c5bb46150d14b7ca
-{
-Kapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/MainActivity.kt,c\f\cf21861b7c2f1bfa176df8d36d6cb4d5a0841fbf
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 
