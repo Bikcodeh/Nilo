@@ -13,16 +13,12 @@ z
 Japp/src/main/java/com/bikcode/nilo/presentation/listener/OnChatListener.kt,5\d\5d1a970e6d578eae860294982312abb0f381fca5
 w
 Gapp/src/main/java/com/bikcode/nilo/presentation/adapter/OrderAdapter.kt,0\e\0e2d0e0feadc61979950ba95cd6e82c467a97f9b
-„
-Tapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/DetailFragment.kt,1\b\1b55061213bef0ec3cc43a71ae312b6921ae729b
 v
 Fapp/src/main/java/com/bikcode/nilo/presentation/adapter/ChatAdapter.kt,f\d\fde68d68d0d2ee5b073ee189ef34f94f14bc36ee
 €
 Papp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/chat/ChatFragment.kt,7\6\76cb07cf640478d9a6be3e087151114439f8ea98
 m
 =app/src/main/java/com/bikcode/nilo/data/model/ProductOrder.kt,5\8\587bdfc04e8adfdb09a695e4d1643a0dbc883e7b
-k
-;app/src/main/java/com/bikcode/nilo/data/model/ProductDTO.kt,3\0\306ff6d320098c59e9925adf9c84981368391c0c
 h
 8app/src/main/java/com/bikcode/nilo/data/model/Message.kt,3\e\3e9041ecff2e8685ffaec8895a6816dad8db1cdb
 ‚
@@ -39,5 +35,15 @@ y
 Iapp/src/main/java/com/bikcode/nilo/presentation/adapter/ProductAdapter.kt,e\a\ea38184a20ee18f26452cb594e3600433ba6c0a7
 }
 Mapp/src/main/java/com/bikcode/nilo/presentation/listener/OnProductListener.kt,b\f\bfb33aaa3863e4c94a52800d11385662858e81f9
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+q
+Aapp/src/main/java/com/bikcode/nilo/presentation/util/Constants.kt,b\3\b3287a475eb1566c33fcabc0b72422d0d6d691a0
+†
+Vapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/profile/ProfileFragment.kt,2\0\2003cb0e7f7c83b9dca44a7f6225f11fa460649d
+
+Oapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/SettingsActivity.kt,4\c\4cf2bf1d905daecdd2a48257c5bb46150d14b7ca
+{
+Kapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/MainActivity.kt,c\f\cf21861b7c2f1bfa176df8d36d6cb4d5a0841fbf
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+
+Oapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/SettingsFragment.kt,7\3\73ca6c54f34590a4b22c308148ac94d662cb0ff4

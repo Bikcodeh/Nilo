@@ -10,8 +10,10 @@ import com.bikcode.nilo.R
 import com.bikcode.nilo.data.model.ProductDTO
 import com.bikcode.nilo.databinding.FragmentDetailBinding
 import com.bikcode.nilo.presentation.listener.MainAux
+import com.bikcode.nilo.presentation.util.Constants
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.storage.FirebaseStorage
 
 class DetailFragment : Fragment() {
 
@@ -75,13 +77,27 @@ class DetailFragment : Fragment() {
                 tvAvailable.text = getString(R.string.available_label, it.quantity)
                 setNewQuantity(it)
 
-                Glide.with(this@DetailFragment)
+                /*Glide.with(this@DetailFragment)
                     .load(it.imgUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .placeholder(R.drawable.ic_access_time)
                     .error(R.drawable.ic_broken_image)
-                    .into(imgProductDetail)
+                    .into(imgProductDetail)*/
+
+                context?.let { context ->
+                    val productRef = FirebaseStorage.getInstance().reference
+                        .child(product!!.sellerId)
+                        .child(Constants.PATH_PRODUCTS_IMAGES)
+                        .child(product!!.id!!)
+
+                    productRef.listAll().addOnSuccessListener { imgList ->
+                        val detailAdapter = DetailAdapter(imgList.items, context)
+                        vpProductImages.apply {
+                            adapter = detailAdapter
+                        }
+                    }
+                }
             }
         }
     }

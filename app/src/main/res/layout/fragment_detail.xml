@@ -8,8 +8,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <!--<androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgProductDetail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="16:9" />-->
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpProductImages"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +35,7 @@
         android:layout_marginHorizontal="@dimen/common_padding_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgProductDetail"
+        app:layout_constraintTop_toBottomOf="@id/vpProductImages"
         tools:text="Product name" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
