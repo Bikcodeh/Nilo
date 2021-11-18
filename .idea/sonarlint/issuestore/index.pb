@@ -37,8 +37,6 @@ Iapp/src/main/java/com/bikcode/nilo/presentation/adapter/ProductAdapter.kt,e\a\
 Mapp/src/main/java/com/bikcode/nilo/presentation/listener/OnProductListener.kt,b\f\bfb33aaa3863e4c94a52800d11385662858e81f9
 q
 Aapp/src/main/java/com/bikcode/nilo/presentation/util/Constants.kt,b\3\b3287a475eb1566c33fcabc0b72422d0d6d691a0
-†
-Vapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/profile/ProfileFragment.kt,2\0\2003cb0e7f7c83b9dca44a7f6225f11fa460649d
 
 Oapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/SettingsActivity.kt,4\c\4cf2bf1d905daecdd2a48257c5bb46150d14b7ca
 
@@ -47,8 +45,6 @@ m
 =app/src/main/java/com/bikcode/nilo/data/service/FCMService.kt,8\b\8bc72e71870bad6416b601b6f2c560e387d2dbad
 k
 ;app/src/main/java/com/bikcode/nilo/data/model/ProductDTO.kt,3\0\306ff6d320098c59e9925adf9c84981368391c0c
-„
-Tapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/DetailFragment.kt,1\b\1b55061213bef0ec3cc43a71ae312b6921ae729b
 …
 Uapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/NiloGlideModule.kt,1\e\1ece9855af95e51f92930297c1c986222e9edbbd
 ƒ

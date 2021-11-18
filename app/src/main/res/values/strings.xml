@@ -72,5 +72,6 @@
     <string name="settings_topic_offers">topic_offers</string>
     <string name="offer">Offers</string>
     <string name="history">History</string>
+    <string name="offer_title">Offers</string>
 
 </resources>

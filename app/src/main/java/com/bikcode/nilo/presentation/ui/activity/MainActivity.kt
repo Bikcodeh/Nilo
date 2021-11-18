@@ -25,6 +25,7 @@ import com.bikcode.nilo.presentation.listener.OnProductListener
 import com.bikcode.nilo.presentation.ui.fragment.cart.CartFragment
 import com.bikcode.nilo.presentation.ui.fragment.detail.DetailFragment
 import com.bikcode.nilo.presentation.ui.fragment.profile.ProfileFragment
+import com.bikcode.nilo.presentation.ui.fragment.promo.PromoFragment
 import com.bikcode.nilo.presentation.util.Constants.PRODUCTS_COLLECTION
 import com.bikcode.nilo.presentation.util.Constants.PROPERTY_TOKEN
 import com.bikcode.nilo.presentation.util.Constants.TOKENS_COLLECTION
@@ -358,7 +359,13 @@ class MainActivity : AppCompatActivity(), OnProductListener, MainAux {
             }
             R.id.actions_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.action_offer -> {
-
+                val fragment = PromoFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.containerMain, fragment)
+                    .addToBackStack(null)
+                    .commit()
+                showButton(false)
             }
         }
         return super.onOptionsItemSelected(item)
