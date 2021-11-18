@@ -41,7 +41,17 @@ Aapp/src/main/java/com/bikcode/nilo/presentation/util/Constants.kt,b\3\b3287a47
 Vapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/profile/ProfileFragment.kt,2\0\2003cb0e7f7c83b9dca44a7f6225f11fa460649d
 
 Oapp/src/main/java/com/bikcode/nilo/presentation/ui/activity/SettingsActivity.kt,4\c\4cf2bf1d905daecdd2a48257c5bb46150d14b7ca
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 
 Oapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/SettingsFragment.kt,7\3\73ca6c54f34590a4b22c308148ac94d662cb0ff4
+m
+=app/src/main/java/com/bikcode/nilo/data/service/FCMService.kt,8\b\8bc72e71870bad6416b601b6f2c560e387d2dbad
+k
+;app/src/main/java/com/bikcode/nilo/data/model/ProductDTO.kt,3\0\306ff6d320098c59e9925adf9c84981368391c0c
+„
+Tapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/DetailFragment.kt,1\b\1b55061213bef0ec3cc43a71ae312b6921ae729b
+…
+Uapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/NiloGlideModule.kt,1\e\1ece9855af95e51f92930297c1c986222e9edbbd
+ƒ
+Sapp/src/main/java/com/bikcode/nilo/presentation/ui/fragment/detail/DetailAdapter.kt,8\3\8387f3a5de51041cb2aa833a28bf64f773514c5b
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164

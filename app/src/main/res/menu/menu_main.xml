@@ -6,8 +6,8 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_history"
-        android:title=""
-        app:showAsAction="ifRoom"
+        android:title="@string/history"
+        app:showAsAction="never"
         android:icon="@drawable/ic_history" />
 
     <item android:id="@+id/action_profile"
@@ -17,5 +17,10 @@
     <item android:id="@+id/actions_settings"
         android:title="@string/settings"
         app:showAsAction="never" />
+
+    <item android:id="@+id/action_offer"
+        android:title="@string/offer"
+        android:icon="@drawable/ic_local_offer"
+        app:showAsAction="ifRoom" />
 
 </menu>
